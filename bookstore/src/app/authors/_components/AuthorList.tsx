@@ -26,10 +26,10 @@ export default function AuthorList() {
                 <Image src={author.image} alt={author.name} width={100} height={150} />
                 <p>{author.description}</p>
                 <p>Birth Date: {author.birthDate}</p>
-                <Link href={`/authors/${author.name}/edit`}>
+                <Link href={`/authors/${author.id}/edit`}>
                   <button className='bg-blue-500 text-white px-4 py-2 rounded mt-2 hover:bg-blue-600'>Edit</button>
                 </Link>
-                <Link href={`/authors/${author.name}/delete`}>
+                <Link href={`/authors/${author.id}/delete`}>
                   <button className='bg-red-500 text-white px-4 py-2 rounded mt-2 hover:bg-red-600 ml-2'>Delete</button>
                 </Link>
             </div>))}

@@ -24,7 +24,7 @@ export const authorSchema = z.object({
 
 export type AuthorFormData = z.infer<typeof authorSchema>;
 
-interface AuthorFormProps {
+export interface AuthorFormProps {
   onSubmit: SubmitHandler<AuthorFormData>;
   defaultValues?: AuthorFormData;
   isSubmitting: boolean;

@@ -13,6 +13,11 @@ export const fetchAuthors = async (): Promise<Author[]> => {
     return fetcher<Author[]>('/authors');
 }
 
+export const fetchAuthorById = async (id: string | number): Promise<Author> => {
+  return fetcher<Author>(`/authors/${id}`);
+};
+
+
 export const createAuthor = (data: AuthorFormData): Promise<Author> => {
     return fetcher<Author>('/authors', {
         method: 'POST',
