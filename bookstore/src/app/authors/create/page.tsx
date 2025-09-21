@@ -4,23 +4,30 @@ import { useRouter } from "next/navigation";
 import AuthorForms, { AuthorFormData } from "./_components/AuthorForms";
 import { useState } from "react";
 import { createAuthor } from "../model/Author.interface";
+import { useNotificationStore } from "@/shared/store/useNotificationStore";
 
 
 export default function CreatePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const showNotification = useNotificationStore(
+    (state) => state.showNotification
+  );
 
   const handleCreateAuthor = async (data: AuthorFormData) => {
     setIsSubmitting(true);
     setError(null);
     try {
       await createAuthor(data);
+      showNotification("Author created successfully", "success"); 
       router.push("/authors");
     } catch (err){
-      setError(
-        err instanceof Error 
-          ? err.message : 'An unexpected error occurred creating the author.');
+      const errorMessage = err instanceof Error 
+        ? err.message : 'An unexpected error occurred creating the author.';
+      setError(errorMessage);
+      showNotification(errorMessage, "error"); 
+    
     } finally{
       setIsSubmitting(false);
 

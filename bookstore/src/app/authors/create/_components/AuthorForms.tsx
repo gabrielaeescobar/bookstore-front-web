@@ -8,14 +8,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 export const authorSchema = z.object({
-  id:z.number(),
   name: z
     .string()
     .min(3, { message: "Name must be at least 3 characters long." }),
   description: z
     .string()
     .min(10, { message: "Description must be at least 10 characters long." }),
-  birthDate: z.string(),
+  birthDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, {
+      message: "Birth Date must be in the format YYYY-MM-DD",
+    }),
   image: z.string().url({ message: "Image must be a valid URL." }),
 });
 
@@ -34,7 +37,7 @@ export default function AuthorForms({
     const { register, handleSubmit, formState: { errors } } = useForm<AuthorFormData>({
       resolver: zodResolver(authorSchema),
       defaultValues:{
-        image:"https://unsplash.com/es/fotos/personas-viendo-pinturas-en-la-galeria-de-un-museo-5yPvSf3bc6g",
+        image:"https://static1.mujerhoy.com/www/multimedia/202007/20/media/cortadas/jk-rowling-polemica-transfobia-k0TB-U110849049600hyD-624x936@MujerHoy.jpg",
         ...defaultValues
       }
     });
@@ -45,20 +48,6 @@ export default function AuthorForms({
     <main className="container mx-auto p-8">
       <h1 className="text-3xl font-bold">Crear Nuevo Autor</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
-        {/*id field */}
-        <div>
-          <label className="block font-medium" htmlFor='id'>
-            ID
-          </label>
-          <input
-            id='id'
-            type="number"
-            {...register("id", { valueAsNumber: true })}
-            className="w-full p-2 border rounded"
-          />
-          {errors.id && (
-            <p className="text-red-500 text-sm mt-1">{errors.id.message}</p>)}
-        </div>
 
         {/* name field */}
         <div>
